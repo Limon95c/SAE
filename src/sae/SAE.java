@@ -5,11 +5,11 @@
  */
 package sae;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,13 +17,14 @@ import java.net.URL;
 import javax.swing.JFrame;
 
 /**
- *
- * @author Jorge
+ * SAE - Sistema de Asistencia Escolar
+ * @author Jorge Limón, José María Flores, Juan José López, José Humberto Guevara
  */
-public class SAE extends JFrame implements Runnable, KeyListener {
+public class SAE extends JFrame implements Runnable {
     
     PrintWriter fileOut; // Archivo de escritura
     BufferedReader fileIn; // Archivo de lectura
+    
     /* objetos para manejar el buffer del JFrame y 
        que la imagen no parpadee */
     private Image    imaImagenJFrame;   // Imagen a proyectar en JFrame
@@ -31,14 +32,22 @@ public class SAE extends JFrame implements Runnable, KeyListener {
     
     private Image imaImagenFondo; // Imagen del fondo
     
-    private static int iWidth;
-    private static int iHeight;
+    private int iEscena; // Pantalla actual
+    
+    private final int iGLXToolbar = 720; //Coordenada X de guía para botones en toolbar
+    private final int iGLYToolbar = 85; //Coordenada Y de guía para botones en toolbar
+    private final int iGLWToolbar = 225; //Coordenada Y de guía para botones en toolbar
+    
+    private static int iWidth; //Ancho
+    private static int iHeight; //Alto
     
     public SAE() {
         // Definir el ancho
         iWidth = 1000;
         // Definir el alto
         iHeight = 565;
+        // Pantalla actual
+        iEscena = 1;
         // Correr el init
         init();
         // Correr el start
@@ -49,7 +58,6 @@ public class SAE extends JFrame implements Runnable, KeyListener {
         // Creo la imagen del fondo
         URL urlImagenFondo = this.getClass().getResource("Fondo.jpg");
         imaImagenFondo = Toolkit.getDefaultToolkit().getImage(urlImagenFondo);
-        addKeyListener(this);
     }
     
     public void start () {
@@ -84,7 +92,12 @@ public class SAE extends JFrame implements Runnable, KeyListener {
      * 
      */
     public void actualiza(){
-        
+        switch(iEscena) {
+            case 1:
+                break;
+            default:
+                break;
+        };
     }
     
     /**
@@ -94,7 +107,12 @@ public class SAE extends JFrame implements Runnable, KeyListener {
      * 
      */
     public void checaColision(){
-        
+        switch(iEscena) {
+            case 1:
+                break;
+            default:
+                break;
+        };
     }
     
     public void paint (Graphics graGrafico){
@@ -135,6 +153,15 @@ public class SAE extends JFrame implements Runnable, KeyListener {
      */
     public void paint1(Graphics graDibujo) {            
         graDibujo.drawImage(imaImagenFondo, 0, 0, getWidth(), getHeight(), this);
+        graDibujo.setColor(Color.LIGHT_GRAY);
+        graDibujo.fillRect(700, 65, 265, 470); //Toolbar
+        graDibujo.fillRect(25, 65, 665, 470); //Principal
+        switch(iEscena) {
+            case 1:
+                break;
+            default:
+                break;
+        };
     }
     
     /**
@@ -145,26 +172,11 @@ public class SAE extends JFrame implements Runnable, KeyListener {
         SAE SAE = new SAE();
         // Define el tamaño del JFrame
         SAE.setSize(iWidth, iHeight);
+        // Not resizable
         SAE.setResizable(false);
         // Define el boton de cerrar
         SAE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // Hace visible el JFrame
         SAE.setVisible(true);
     }
-
-    @Override
-    public void keyTyped(KeyEvent ke) {
-        
-    }
-
-    @Override
-    public void keyPressed(KeyEvent ke) {
-        
-    }
-
-    @Override
-    public void keyReleased(KeyEvent ke) {
-        
-    }
-    
 }
