@@ -9,16 +9,15 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
 import javax.swing.JFrame;
 import java.io.FileReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import javax.swing.JOptionPane;
 
@@ -26,7 +25,7 @@ import javax.swing.JOptionPane;
  * SAE - Sistema de Asistencia Escolar
  * @author Jorge Limón, José María Flores, Juan José López, José Humberto Guevara
  */
-public class SAE extends JFrame implements Runnable {
+public class SAE extends JFrame implements Runnable, MouseListener {
     
     // Manejo de archivos
     PrintWriter fileOut; // Archivo de escritura
@@ -39,6 +38,10 @@ public class SAE extends JFrame implements Runnable {
     
     private Profesor Profe; // Objeto profesor
     
+    private Icono btnEditProfe; // Boton de editar profesor
+    
+    private String sTrimestres; // Lista de trimestres
+    
     // Fonts y colores
     private Font fontTituloToolbar; // Font de los titulos en la barra
     private Color colorTitulo; // Color de los titulos
@@ -48,6 +51,7 @@ public class SAE extends JFrame implements Runnable {
     private int iEscena; // Pantalla actual
     
     private final int iGLXToolbar = 720; //Coordenada X de guía para botones en toolbar
+    private final int iGLYFinProfe = 137; //Coordenada X de guía para botones en toolbar
     private final int iGLYToolbar = 95; //Coordenada Y de guía para botones en toolbar
     private final int iGLWToolbar = 225; //Coordenada Y de guía para botones en toolbar
     
@@ -61,6 +65,8 @@ public class SAE extends JFrame implements Runnable {
         iHeight = 565;
         // Pantalla actual
         iEscena = 1;
+        // Mouse
+        addMouseListener(this);
         // Correr el init
         init();
         // Correr el start
@@ -71,6 +77,12 @@ public class SAE extends JFrame implements Runnable {
         // Creo la imagen del fondo
         URL urlImagenFondo = this.getClass().getResource("Fondo.jpg");
         imaImagenFondo = Toolkit.getDefaultToolkit().getImage(urlImagenFondo);
+        
+        // Creo el boton para editar profesor
+        URL urlIconoEditar = this.getClass().getResource("configicon.png");
+	btnEditProfe = new Icono(0, 0, Toolkit.getDefaultToolkit().getImage(urlIconoEditar));
+        btnEditProfe.setX(iGLXToolbar + 188);
+        btnEditProfe.setY(iGLYToolbar + 10);
         
         Profe = new Profesor();
         cargarProfe();
@@ -167,40 +179,46 @@ public class SAE extends JFrame implements Runnable {
      * En este metodo se dibuja la imagen con la posicion actualizada,
      * ademas que cuando la imagen es cargada te despliega una advertencia.
      * 
-     * @param graDibujo es el objeto de <code>Graphics</code> usado para
+     * @param g es el objeto de <code>Graphics</code> usado para
      * dibujar.
      * 
      */
-    public void paint1(Graphics graDibujo) {            
-        graDibujo.drawImage(imaImagenFondo, 0, 0, getWidth(), getHeight(), this);
-        graDibujo.setColor(Color.LIGHT_GRAY);
-        graDibujo.fillRect(700, 65, 265, 470); //Toolbar
+    public void paint1(Graphics g) {
+        // Dibuja la imagen de fondo y el fondo de la Toolbar
+        g.drawImage(imaImagenFondo, 0, 0, getWidth(), getHeight(), this);
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRect(700, 65, 265, 470); //Toolbar
         
-        // Texto de Profesor en Toolbar
-        graDibujo.setColor(colorTitulo);
-        graDibujo.setFont(fontTituloToolbar);
-        graDibujo.drawString("Profesor", iGLXToolbar, iGLYToolbar);
-        
-        // Fondo de profesor
-        graDibujo.setColor(Color.DARK_GRAY);
-        graDibujo.fillRect(iGLXToolbar, iGLYToolbar + 15, iGLWToolbar, 30); //Toolbar
+        // Texto y Fondo de Profesor en Toolbar
+        g.setColor(colorTitulo);
+        g.setFont(fontTituloToolbar);
+        g.drawString("Profesor", iGLXToolbar, iGLYToolbar); // Titulo profesor
+        g.setColor(Color.DARK_GRAY);
+        g.fillRect(iGLXToolbar, iGLYToolbar + 10, iGLWToolbar - 40, 32); // Fondo de Profesor
         
         // Nombre de profesor y boton
-        graDibujo.setColor(Color.WHITE);
-        if(Profe.getNombre().length() > 20) {
-            graDibujo.drawString(Profe.getNombre().substring(0, 19), iGLXToolbar + 3, iGLYToolbar + 18);
+        g.setColor(Color.WHITE);
+        if(Profe.getNombre().length() > 17) {
+            g.drawString(Profe.getNombre().substring(0, 14) + "...", iGLXToolbar + 3, iGLYToolbar + 32);
         }
         else {
-            graDibujo.drawString(Profe.getNombre(), iGLXToolbar + 3, iGLYToolbar + 18);
+            g.drawString(Profe.getNombre(), iGLXToolbar + 3, iGLYToolbar + 32);
         }
+        btnEditProfe.paint(g, this);
+        
+        // Texto y Fondo de Trimestre
+        g.setColor(Color.DARK_GRAY);
+        g.setFont(fontTituloToolbar);
+        g.drawString("Trimestre", iGLXToolbar, iGLYFinProfe + 20); // Titulo profesor
+        g.fillRect(iGLXToolbar, iGLYFinProfe + 30, iGLWToolbar - 40, 32); // Fondo de Profesor
         
         switch(iEscena) {
             case 1:
                 break;
             case 2:
                 // Fondo principal
-                graDibujo.setColor(Color.LIGHT_GRAY);
-                graDibujo.fillRect(25, 65, 665, 470);
+                g.setColor(Color.LIGHT_GRAY);
+                g.fillRect(25, 65, 665, 470);
             default:
                 break;
         };
@@ -229,27 +247,28 @@ public class SAE extends JFrame implements Runnable {
     public void obtenerProfe() {
         try
         {
-            // Abrir archivo para escribir
-            fileOut = new PrintWriter(new FileWriter("DP.txt"));
-
             // Pedir datos
             String nom = JOptionPane.showInputDialog("Nombre del profesor:");
             String pue = JOptionPane.showInputDialog("Puesto del profesor:");
             String corr = JOptionPane.showInputDialog("Correo del profesor:");
+            
+            if(nom != null && pue != null && corr != null)
+            {
+                // Asignar en objeto Profe
+                Profe.setNombre(nom);
+                Profe.setPuesto(pue);
+                Profe.setCorreo(corr);
 
-            // Asignar en objeto Profe
-            Profe.setNombre(nom);
-            Profe.setPuesto(pue);
-            Profe.setCorreo(corr);
-
-            // Guardar datos en archivo
-            fileOut.println(nom);
-            fileOut.println(pue);
-            fileOut.println(corr);
-            fileOut.close();
+                // Guardar datos en archivo
+                fileOut = new PrintWriter(new FileWriter("DP.txt"));
+                fileOut.println(nom);
+                fileOut.println(pue);
+                fileOut.println(corr);
+                fileOut.close();
+            }
         }
         catch (Exception e) {
-            System.out.println("Error en la recepcion de datos...");
+            System.out.println("Edición de maestro cancelada");
         }
     }
     
@@ -265,7 +284,37 @@ public class SAE extends JFrame implements Runnable {
         SAE.setResizable(false);
         // Define el boton de cerrar
         SAE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // Titulo
+        SAE.setTitle("SAE - Sistema de Asistencia Estudiantil");
         // Hace visible el JFrame
         SAE.setVisible(true);
     }
+
+    @Override
+    public void mouseClicked(MouseEvent me) {
+        if(btnEditProfe.contiene(me.getX(), me.getY()))
+            obtenerProfe();
+    }
+
+    @Override
+    public void mousePressed(MouseEvent me) {
+        
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent me) {
+        
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent me) {
+        
+    }
+
+    @Override
+    public void mouseExited(MouseEvent me) {
+        
+    }
+    
+    
 }
