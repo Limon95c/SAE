@@ -19,6 +19,8 @@ import java.net.URL;
 import javax.swing.JFrame;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.StringTokenizer;
+import java.util.Vector;
 import javax.swing.JOptionPane;
 
 /**
@@ -40,7 +42,10 @@ public class SAE extends JFrame implements Runnable, MouseListener {
     
     private Icono btnEditProfe; // Boton de editar profesor
     
-    private String sTrimestres; // Lista de trimestres
+    private Vector<Vector<String>> sTrim; // Lista de trimestres
+    
+    private int iTrimActual; // Trimestre Actual
+    private int iCursoActual; // Curso Actual
     
     // Fonts y colores
     private Font fontTituloToolbar; // Font de los titulos en la barra
@@ -84,8 +89,11 @@ public class SAE extends JFrame implements Runnable, MouseListener {
         btnEditProfe.setX(iGLXToolbar + 188);
         btnEditProfe.setY(iGLYToolbar + 10);
         
+        sTrim = new Vector<Vector<String>>();
+        iTrimActual = -1;
+        iCursoActual = -1;
         Profe = new Profesor();
-        cargarProfe();
+        cargarDatosIniciales();
         
         // Titulos y fonts
         fontTituloToolbar = Font.decode("Arial Unicode MS-BOLD-16");
@@ -224,17 +232,43 @@ public class SAE extends JFrame implements Runnable, MouseListener {
         };
     }
     
-    public void cargarProfe() {
+    public void cargarDatosIniciales() {
+        StringTokenizer tok; // Divisor de strings
+        String linea; // Lector de lineas
         // Abrimos el archivo en caso de que hubiera uno
         try {
             // Abrir el archivo
-            fileIn = new BufferedReader(new FileReader("DP.txt"));
+            fileIn = new BufferedReader(new FileReader("DPTM.txt"));
+            // Obtenemos la primera linea
+            linea = fileIn.readLine();
+            // Dividimos la linea por tokens
+            tok = new StringTokenizer(linea, "/");
+            
+            //----------------------CARGAR PROFESOR--------------------------
             // Obtener el nombre
-            Profe.setNombre(fileIn.readLine());
+            Profe.setNombre(tok.nextToken());
             // Obtener el puesto
-            Profe.setPuesto(fileIn.readLine());
+            Profe.setPuesto(tok.nextToken());
             // Obtener el correo
-            Profe.setCorreo(fileIn.readLine());
+            Profe.setCorreo(tok.nextToken());
+            
+            //-----------------CARGAR TRIMESTRES Y CURSOS--------------------
+            // Obtenemos la siguiente linea
+            linea = fileIn.readLine();
+            while(linea != null) { // Mientras haya trimestres por leer
+                // Dividir linea y agregar un nuevo trimestre
+                tok = new StringTokenizer(linea, "/");
+                sTrim.add(new Vector<String>());
+                iTrimActual++;
+                // Obtener nombre del trimestre
+                sTrim.elementAt(iTrimActual).add(tok.nextToken());
+                // Mientras haya tokens
+                while(tok.countTokens() > 0) {
+                    // Obtener el nombre del curso
+                    sTrim.elementAt(iTrimActual).add(tok.nextToken());
+                }
+            }
+            
             // Cerrar el archivo
             fileIn.close();
         }
@@ -260,15 +294,13 @@ public class SAE extends JFrame implements Runnable, MouseListener {
                 Profe.setCorreo(corr);
 
                 // Guardar datos en archivo
-                fileOut = new PrintWriter(new FileWriter("DP.txt"));
-                fileOut.println(nom);
-                fileOut.println(pue);
-                fileOut.println(corr);
+                fileOut = new PrintWriter(new FileWriter("DPTM.txt"));
+                fileOut.println(nom + "/" + pue + "/" + corr);
                 fileOut.close();
             }
         }
         catch (Exception e) {
-            System.out.println("Edición de maestro cancelada");
+            System.out.println("Error de guardado");
         }
     }
     
@@ -314,7 +346,6 @@ public class SAE extends JFrame implements Runnable, MouseListener {
     @Override
     public void mouseExited(MouseEvent me) {
         
-    }
-    
+    }    
     
 }
