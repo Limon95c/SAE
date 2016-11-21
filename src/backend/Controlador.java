@@ -169,7 +169,7 @@ public class Controlador{
         if(a == null)
             throw new Exception("no se encontro el alumno especificado");
         else{
-            for(Curso curso : cursos){
+            for(Curso curso : Cursos){
                 curso.eliminaAlumno(id);   
             }
             ArrayList<Falta> faltas = a.getFaltas();
@@ -225,6 +225,7 @@ public class Controlador{
                 alumno.eliminaFalta(id);
                 }
             this.Faltas.remove(a);
+    }
     }
 
     public boolean guardarDatos(){
