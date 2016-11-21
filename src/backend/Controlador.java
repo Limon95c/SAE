@@ -168,39 +168,62 @@ public class Controlador{
         Alumno a = encontrarAlumno(id);
         if(a == null)
             throw new Exception("no se encontro el alumno especificado");
-        else
+        else{
+            for(Curso curso : cursos){
+                curso.eliminaAlumno(id);   
+            }
+            ArrayList<Falta> faltas = a.getFaltas();
+            for(Falta f : faltas){
+             this.Faltas.remove(f);   
+            }
             this.Alumnos.remove(a);
+            
+        }
     }
 
     public void deleteProfesor(int id) throws Exception {
         Profesor a = encontrarProfesor(id);
         if(a == null)
             throw new Exception("no se encontro el profesor especificado");
-        else
+        else{
+            for(Curso curso: this.Cursos){
+              if(curso.getProfesor().getID() == id)
+                  this.deleteCurso(curso.getID());
+            }
             this.Profesores.remove(a);
+        }
     }
 
     public void deletePeriodo(int id) throws Exception{
         Periodo a = encontrarPeriodo(id);
         if(a == null)
             throw new Exception("no se encontro el periodo especificado");
-        else
+        else{
+            
             this.Periodos.remove(a);
+        }
     }
 
     public void deleteCurso(int id) throws Exception{
         Curso a = encontrarCurso(id);
         if(a == null)
             throw new Exception("no se encontro el curso especificado");
-        else
+        else{
+            for(Periodo periodo : this.Periodos){
+                periodo.eliminaCurso(id);
+            }
             this.Cursos.remove(a);
+        }
     }
 
     public void deleteFalta(int id) throws Exception{
         Falta a = encontrarFalta(id);
         if(a == null)
             throw new Exception("no se encontro la falta especificada");
-        else
+        else{
+            for(Alumno alumno : this.Alumnos){
+                alumno.eliminaFalta(id);
+                }
             this.Faltas.remove(a);
     }
 
