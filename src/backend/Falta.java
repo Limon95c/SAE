@@ -1,14 +1,15 @@
+package backend;
 
 public class Falta{
-    private Date fecha;
+    private Fecha fecha;
     private int ID;
-    private boolean Justificada;
-    private Controlador controlador;
-    public Falta(int ID, Date fecha, boolean Justificada, 
-                 Controlador controlador){
+    private int Tipo; // 1 = falta normal, 2 = Falta Justificada, 3 = Retardo
+    private ControladorBackend controlador;
+    public Falta(int ID, Fecha fecha, int tipo, 
+                 ControladorBackend controlador){
         this.ID = ID;
         this.fecha = fecha;
-        this.Justificada = Justificada;
+        this.Tipo = tipo;
         this.controlador = controlador;
     }
     /*
@@ -18,19 +19,35 @@ public class Falta{
         return this.ID;
    } 
 
-   public Date getFecha(){
+   public Fecha getFecha(){
         return this.fecha;
    }
 
-   public boolean getJustificada(){
-        return this.Justificada;
+   public int getTipo(){
+        return this.Tipo;
    }
+
+    public ControladorBackend getControlador() {
+        return controlador;
+    }
 
    /*
     * Setters
     */
 
-   public void setFecha(Date fecha){
+   public void setFecha(Fecha fecha){
         this.fecha = fecha;
    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public void setTipo(int Tipo) {
+        this.Tipo = Tipo;
+    }
+
+    public void setControlador(ControladorBackend controlador) {
+        this.controlador = controlador;
+    }
 }

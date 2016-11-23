@@ -1,4 +1,4 @@
-
+package backend;
 /**
  * Clase que contiene la informacion relevante a los profesores.
  * Favor de notar que esta clase nunca debe ser instanciada fuera de 
@@ -10,9 +10,10 @@ public class Profesor{
     private String Nombre;
     private String Puesto;
     private String Correo;
-    private Controlador controlador;
+    private ControladorBackend controlador;
+    
     public Profesor(int id, String Nombre, String Puesto, String Correo, 
-                    Controlador controlador){
+                    ControladorBackend controlador){
         this.ID = id;
         this.Nombre = Nombre;
         this.Puesto = Puesto;

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane id="BorderPane" prefHeight="565.0" prefWidth="1000.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MVC_SAE.ControladorSAE">
+    <stylesheets>
+        <URL value="@ViewStyles.css" />
+    </stylesheets>
+   <right>
+      <VBox id="SidePanel" prefHeight="200.0" prefWidth="270.0" style="-fx-background-color: #9E9E9E; -fx-border-radius: 3;" BorderPane.alignment="TOP_LEFT">
+         <children>
+            <Label id="ProfeLbl" text="Profesor">
+               <padding>
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="7.0" />
+               </padding>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER_LEFT" prefWidth="200.0" spacing="5.0">
+               <children>
+                  <TextField id="ProfeTF" fx:id="ProfeTF" disable="true" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <ImageView id="ProfeIV" fx:id="ConfigProfe" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@configicon.png" />
+                     </image>
+                     <effect>
+                        <ColorAdjust brightness="1.0" contrast="1.0" hue="1.0" saturation="1.0" />
+                     </effect>
+                  </ImageView>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </HBox>
+            <Label id="PeriodoLbl" text="Periodo Academico">
+               <padding>
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+               </padding>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER_LEFT" prefWidth="200.0" spacing="5.0">
+               <children>
+                  <TextField id="PeriodoTF" fx:id="PeriodoTF" disable="true" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <ImageView id="ConfigPeriodo" fx:id="ConfigPeriodo" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@configicon.png" />
+                     </image>
+                     <effect>
+                        <ColorAdjust brightness="1.0" contrast="1.0" hue="1.0" saturation="1.0" />
+                     </effect></ImageView>
+               </children>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </HBox>
+            <TableView id="TablaCursos" fx:id="CursoTV" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+              <columns>
+                <TableColumn id="NameColumn" fx:id="nameColumn" editable="false" minWidth="-Infinity" prefWidth="250.0" sortType="DESCENDING" style="-fx-font-size: 18;" text="Cursos" />
+              </columns>
+               <VBox.margin>
+                  <Insets bottom="7.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </TableView>
+            <HBox alignment="CENTER" spacing="5.0">
+               <children>
+                  <Button id="AgregarCursoBtn" fx:id="AgregaCurso" mnemonicParsing="false" text="+" textAlignment="CENTER">
+                     <font>
+                        <Font name="Consolas Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <Region prefWidth="20.0" HBox.hgrow="ALWAYS" />
+                  <Button id="BorrarCursoBtn" fx:id="EliminaCurso" mnemonicParsing="false" text="-">
+                     <font>
+                        <Font name="Consolas" size="15.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="7.0" left="10.0" right="10.0" top="5.0" />
+               </padding>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="50.0" right="50.0" top="50.0" />
+         </BorderPane.margin>
+      </VBox>
+   </right>
+   <center>
+      <VBox id="PantallaPrinCurso" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #9E9E9E;" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="50.0" left="50.0" right="10.0" top="50.0" />
+         </BorderPane.margin>
+         <children>
+            <HBox id="TituloPrincipal" alignment="CENTER_LEFT" prefWidth="200.0">
+               <children>
+                  <Label id="CursoPrincipal" fx:id="TituloCurso" text="Nombre del Curso -">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" left="20.0" right="10.0" top="14.0" />
+                     </padding>
+                  </Label>
+                  <Label id="PeriodoPrincipal" fx:id="TituloPeriodo" text="Periodo Académico -">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" right="10.0" top="14.0" />
+                     </padding>
+                  </Label>
+                  <Label id="AlumnoPrincipal">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" right="10.0" top="14.0" />
+                     </padding>
+                  </Label>
+                  <Region prefWidth="50.0" HBox.hgrow="ALWAYS" />
+                  <ImageView fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@configicon.png" />
+                     </image>
+                     <effect>
+                        <ColorAdjust brightness="1.0" contrast="1.0" hue="1.0" saturation="1.0" />
+                     </effect>
+                     <HBox.margin>
+                        <Insets right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </ImageView>
+               </children>
+            </HBox>
+            <VBox id="MostrarAlumnos" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <TableView fx:id="AlumnosTV" prefHeight="500.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                      <TableColumn fx:id="nomAlumno" minWidth="50.0" prefWidth="360.0" text="Alumno" />
+                      <TableColumn fx:id="Fcol" prefWidth="70.0" text="F         " />
+                        <TableColumn fx:id="Rcol" prefWidth="70.0" text="R         " />
+                        <TableColumn fx:id="FJcol" prefWidth="70.0" text="FJ         " />
+                    </columns>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                     </VBox.margin>
+                  </TableView>
+                  <HBox alignment="BOTTOM_CENTER" prefWidth="200.0" spacing="35.0">
+                     <children>
+                        <Button fx:id="AgregaAlumnoBtn" mnemonicParsing="false" text="Agregar alumno" />
+                        <Button fx:id="AgregaFaltaORetardoBtn" mnemonicParsing="false" text="Agregar falta o retardo" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </center>
+    
+    
+</BorderPane>

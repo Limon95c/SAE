@@ -1,0 +1,14 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.root{
+    -fx-background-image: url("Fondo.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}
+
+.mainFxmlClass {
+
+}

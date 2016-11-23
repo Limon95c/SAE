@@ -1,4 +1,4 @@
-
+package backend;
 /*
  * Clase encargada de modelar el funcionamiento de un curso.
  * Esta clase no se debe de instanciar fuera de controlador
@@ -11,10 +11,11 @@ public class Curso{
     private int FaltasAlerta;
     private int LimiteFaltas;
     private Profesor profesor;
-    private Controlador controlador;
+    private ControladorBackend controlador;
     private ArrayList<Alumno> Alumnos;
+    
     public Curso(int ID, String Nombre, int FaltasAlerta, int LimiteFaltas,
-                 Profesor profesor, Controlador controlador, 
+                 Profesor profesor, ControladorBackend controlador, 
                  ArrayList<Alumno> alumnos){
         this.ID = ID;
         this.Nombre = Nombre;
@@ -52,9 +53,17 @@ public class Curso{
         return this.Alumnos;
     }
 
+    public ControladorBackend getControlador() {
+        return controlador;
+    }
+
     /*
      * Area de setters
      */
+    
+    public void setID(int id){
+        this.ID = id;
+    }
     
     public void setProfesor(Profesor p){
         this.profesor = p;
@@ -70,7 +79,15 @@ public class Curso{
 
     public void setLimiteFaltas(int LimiteFaltas){
         this.LimiteFaltas = LimiteFaltas;
-    }   
+    }
+
+    public void setControlador(ControladorBackend controlador) {
+        this.controlador = controlador;
+    }
+
+    public void setAlumnos(ArrayList<Alumno> Alumnos) {
+        this.Alumnos = Alumnos;
+    }
 
     /*
      * Area de funciones de la clase

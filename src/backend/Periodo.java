@@ -1,3 +1,4 @@
+package backend;
 
 import java.util.ArrayList;
 public class Periodo{
@@ -5,10 +6,11 @@ public class Periodo{
     private int MesInicio;
     private int MesFin;
     private int Year;
-    private Controlador controlador;
+    private ControladorBackend controlador;
     private ArrayList<Curso> Cursos;
+    
     public Periodo(int ID, int MesInicio, int MesFin, int Year,
-            Controlador controlador, ArrayList<Curso> Cursos){
+            ControladorBackend controlador, ArrayList<Curso> Cursos){
         this.ID = ID;
         this.MesInicio = MesInicio;
         this.MesFin = MesFin;
@@ -51,6 +53,93 @@ public class Periodo{
 
     public void setYear(int year){
         this.Year = year;
+    }
+    
+    @Override
+    public String toString() {
+        String message = "";
+        switch(MesInicio) {
+            case 1:
+                message += "Enero";
+                break;
+            case 2:
+                message += "Febrero";
+                break;
+            case 3:
+                message += "Marzo";
+                break;
+            case 4:
+                message += "Abril";
+                break;
+            case 5:
+                message += "Mayo";
+                break;
+            case 6:
+                message += "Junio";
+                break;
+            case 7:
+                message += "Julio";
+                break;
+            case 8:
+                message += "Agosto";
+                break;
+            case 9:
+                message += "Septiembre";
+                break;
+            case 10:
+                message += "Octubre";
+                break;
+            case 11:
+                message += "Noviembre";
+                break;
+            case 12:
+                message += "Diciembre";
+                break;
+        };
+        
+        message += " - ";
+        
+        switch(MesFin) {
+            case 1:
+                message += "Enero";
+                break;
+            case 2:
+                message += "Febrero";
+                break;
+            case 3:
+                message += "Marzo";
+                break;
+            case 4:
+                message += "Abril";
+                break;
+            case 5:
+                message += "Mayo";
+                break;
+            case 6:
+                message += "Junio";
+                break;
+            case 7:
+                message += "Julio";
+                break;
+            case 8:
+                message += "Agosto";
+                break;
+            case 9:
+                message += "Septiembre";
+                break;
+            case 10:
+                message += "Octubre";
+                break;
+            case 11:
+                message += "Noviembre";
+                break;
+            case 12:
+                message += "Diciembre";
+                break;
+        };
+        
+        message += " " + Year;
+        return message;
     }
 
     /*
